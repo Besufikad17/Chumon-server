@@ -8,13 +8,23 @@ class RequestController {
   ) => {
     const title = req.params.title;
 
-    const newRequest = new RequestS({ title });
-    newRequest
-      .save()
-      .then((reqs) => {
-        res.json({ msg: "Request successfully added" });
-      })
-      .catch((err) => res.json(err));
+    RequestS.find({ title }).then((anime) => {
+      if (anime) {
+        res
+          .status(400)
+          .json({
+            msg: "Anime is already requested please wait till resolved!!",
+          });
+      } else {
+        const newRequest = new RequestS({ title });
+        newRequest
+          .save()
+          .then((reqs) => {
+            res.json({ msg: "Request successfully added" });
+          })
+          .catch((err) => res.json(err));
+      }
+    });
   };
 
   public getRequests = async (req: Request, res: Response) => {
