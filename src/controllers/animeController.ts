@@ -7,7 +7,17 @@ class AnimeController {
 
     Anime.find({ title: title })
       .then((data) => {
-        res.send(data);
+        if (data.length == 0) {
+          Anime.find({ alternative_title: title })
+            .then((anime) => {
+              res.json(anime);
+            })
+            .catch((err) => {
+              res.json(err);
+            });
+        } else {
+          res.send(data);
+        }
       })
       .catch((err) => {
         res.send(err);
@@ -15,7 +25,7 @@ class AnimeController {
   };
 
   public addOrder = async (req: Request, res: Response) => {
-    const { title, order } = req.body;
+    const { title, order, alternative_title } = req.body;
 
     // if (!title || !order) {
     //   return res.send(401).json({ msg: "Please enter all fields!" });
@@ -24,6 +34,7 @@ class AnimeController {
     const newAnimeOrder = new Anime({
       title,
       order,
+      alternative_title
     });
 
     newAnimeOrder
