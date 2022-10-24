@@ -27,10 +27,6 @@ class AnimeController {
   public addOrder = async (req: Request, res: Response) => {
     const { title, order, alternative_title } = req.body;
 
-    // if (!title || !order) {
-    //   return res.send(401).json({ msg: "Please enter all fields!" });
-    // }
-
     const newAnimeOrder = new Anime({
       title,
       order,
