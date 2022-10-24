@@ -13,7 +13,7 @@ class RequestController {
         res
           .status(400)
           .json({
-            msg: "Anime is already requested please wait till resolved!!",
+            msg: "Anime is already requested please wait till it's resolved!!",
           });
       } else {
         const newRequest = new RequestS({ title });
